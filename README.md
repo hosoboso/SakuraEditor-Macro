@@ -21,7 +21,9 @@ image.jpgを
 
 ### brreplace.mac
 
-選択テキストの末尾に<br>追加。
+選択テキストの末尾に
+    <br>
+を追加。
 
 ### commentout.mac
 
