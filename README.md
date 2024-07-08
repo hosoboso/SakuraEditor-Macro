@@ -9,20 +9,26 @@ HTML手打ちの人向け。
 
 ### p.js及びp.mac
 
-    <p>hogehoge</p>
+```HTML
+<p>hogehoge</p>
+```
 のようにテキストを挟むタグ変換。
 pをdivやH1など他のタグに変更して他のタグのマクロも作成できる。
 
 ### img.mac
 
 image.jpgを
-    <img src="image.jpg" alt="">
+```HTML
+<img src="image.jpg" alt="">
+```
 と変換。
 
 ### brreplace.mac
 
 選択テキストの末尾に
-    <br>
+```HTML
+<br>
+```
 を追加。
 
 ### commentout.mac
@@ -33,24 +39,68 @@ image.jpgを
 
 選択テキストをリストタグに変換。
 
+```HTML
+aaa
+bbb
+ccc
+
+↓
+
+<ul>
+	<li>aaa</li>
+	<li>bbb</li>
+	<li>ccc</li>
+</ul>
+```
+
 ### table.js
 
 選択テキストをテーブルタグに変換。
 
+```HTML
+aaa	111
+bbb	222
+ccc	333
+
+↓
+
+<table>
+<thead>
+	<tr><th>aaa</th><th>111</th></tr>
+</thead>
+<tbody>
+	<tr><td>bbb</td><td>222</td></tr>
+	<tr><td>ccc</td><td>333</td></tr>
+</tbody>
+</table>
+```
+
 ### href.js
 
-    hogehoge
-    ↓
-    <a href="hogehoge" target="_blank">hogehoge</a>
+選択テキストhogehogeを、
+```HTML
+<a href="hogehoge" target="_blank">hogehoge</a>
+```
 に変換。
 
 ### hexadecimal.js
 
 何の文字でも16進数の数値文字参照に変換。
-
+```HTML
+♥ → &#x2665;
+♪ → &#x266a;
+```
 ### htmlentity.js
 
-HTML頻出の文字参照置換。選択文字列中の&,<,>,",'のみ置換する。
+HTML頻出の文字参照置換。選択文字列中の
+```HTML
+&, <, >, ", '
+```
+のみ
+```HTML
+&amp;, &lt;, &gt;, &quot;, &apos;
+```
+に置換する。
 
 ## 他の方が作ったおすすめマクロ
 
