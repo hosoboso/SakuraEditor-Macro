@@ -1,0 +1,8 @@
+﻿//選択テキストの行末に<br>を追加する
+//「\\r\\n」は改行コードCRLFなので、異なる改行コードなら適宜変更
+ReplaceAll('\\r\\n', '<br>\\r\\n', 156);	// すべて置換
+ReDraw(0);	// 再描画
+S_GoLineEnd_Sel() ;
+SearchClearMark(0);	// 検索マークの切替え
+CancelMode(0);	// 各種モードの取り消し
+SearchClearMark(0);	// 検索マークの切替え
