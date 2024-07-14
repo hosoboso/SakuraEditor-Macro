@@ -106,6 +106,10 @@ HTML頻出の文字参照置換。選択文字列中の
 
 [直前の閉じていない HTML/XML タグを閉じる](https://sakura-editor.sourceforge.net/cgi-bin/cyclamen/cyclamen.cgi?log=macro&tree=c546)
 
+※上マクロの「閉じタグを省略可能な要素名」はHTML5に対応していないので、[Void element （空要素）](https://developer.mozilla.org/ja/docs/Glossary/Void_element)を参考に書き直すと良いです。
+
 [選択したテキストをファイル名として開く](https://sakura-editor.github.io/bbslog/sf/macro/134.html)
 
 [VSライクなhtml終タグ自動補完](https://sakura-editor.github.io/bbslog/sf/macro/341.html)
+
+※こちらも、「HTMLの場合は、タグの種類によっては終タグがいらない」部分がHTML5に対応していないので必要なら修正。
