@@ -3,9 +3,7 @@
 
 var result = "";
 var inputStrings = Editor.GetSelectedString(0);
-if (inputStrings == "") {
-	alert('文字を入力してください');
-}
+
 inputStringsLength = inputStrings.length;
 
 // charCodeAt : 0スタートで、*番目の文字のUnicode("12371"や"12398")を返す。
