@@ -8,38 +8,9 @@ var indent = "\t";
 // var indent = "";
 
 // 選択されている文字列を取得
-var text = Editor.GetSelectedString(0);
+var Selecttext = Editor.GetSelectedString(0);
 
-// 改行で分割
-var lines = [];
-var lineCodes = [];
-var str = "";
-for (var i = 0; i < text.length; i++) {
-	var ch = text.substr(i, 1);
-	if (ch === "\r") {
-		var tmpstr = "\r";
-		if (i + 1 < text.length && text.substr(i + 1, 1) == "\n") {
-			i++;
-			tmpstr += "\n";
-		}
-		lines.push(str);
-		str = "";
-		lineCodes.push(tmpstr);
-	}
-	else if (ch === "\n") {
-		lines.push(str);
-		str = "";
-		lineCodes.push("\n");
-	}
-	else {
-		str += ch;
-	}
-}
-if (str != "") {
-	lines.push(str);
-	lineCodes.push("");
-}
-
+// 改行コードで分岐
 var lineCode;
 switch (Editor.GetLineCode()) {
 	case 0:
@@ -53,9 +24,14 @@ switch (Editor.GetLineCode()) {
 		break;
 }
 
+// 選択テキストを改行で分割
+var textArray = [];
+textArray = Selecttext.split(lineCode);
+
+//インデント（indent）や改行位置（lineCode）は好みで変更してください
 str = "<ul>" + lineCode;
-for (var i = 0; i < lines.length; i++) {
-	str += indent + "<li>" + lines[i] + "</li>" + lineCode;
+for (var i = 0; i < textArray.length; i++) {
+	str += indent + "<li>" + textArray[i] + "</li>" + lineCode;
 	}
 str += "</ul>";
 
