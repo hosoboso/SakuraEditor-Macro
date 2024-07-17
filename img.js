@@ -20,7 +20,6 @@ if(Selecttext.length == 0) {
 		Left(0);
 	}
 } else {
-
 	// 改行コードで分岐
 	var lineCode;
 	switch (Editor.GetLineCode()) {
@@ -41,7 +40,7 @@ if(Selecttext.length == 0) {
 	
 	// 選択テキストが1行のみの場合2行目を空欄にする
 	if (textArray.length == 1){
-	textArray[1] = "";
+		textArray[1] = "";
 	}
 	
 	var SelectTag = "<img src=\"" + textArray[0] + "\" alt=\"" + textArray[1] + "\">";

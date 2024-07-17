@@ -25,8 +25,7 @@ switch (Editor.GetLineCode()) {
 }
 
 // 選択テキストを改行で分割
-var textArray = [];
-textArray = Selecttext.split(lineCode);
+var textArray = Selecttext.split(lineCode);
 
 //インデント（indent）や改行位置（lineCode）は好みで変更してください
 str = "<ul>" + lineCode;
