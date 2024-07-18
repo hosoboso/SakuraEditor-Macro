@@ -132,3 +132,6 @@ HTML頻出の文字参照置換。選択文字列中の
 > こちらも、「HTMLの場合は、タグの種類によっては終タグがいらない」部分がHTML5に対応していないので必要なら修正。
 
 ### [選択したテキストをファイル名として開く](https://sakura-editor.github.io/bbslog/sf/macro/134.html)
+
+上マクロを、ファイルとして開く拡張子を指定した私家改造版としてUPしました。  
+[openfile.js](openfile.js)
