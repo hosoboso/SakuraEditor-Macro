@@ -1,53 +1,86 @@
 /*
-openFile ç§å®¶æ”¹é€ ç‰ˆ
+openFile SakuraEditor—p „‰Æ‰ü‘¢”Å
 
-ã“ã‚Œã¯akkunæ°ã«ã‚ˆã‚‹openFileã‚’å€‹äººç”¨ã«æ›¸ãæ›ãˆãŸã‚‚ã®ã§ã™ã€‚
-ã‚¨ãƒ©ãƒ¼ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ç”¨ã‚·ã‚§ãƒ«ã‚’ä½¿ç”¨ã—ã¦ã„ã‚‹éƒ½åˆã§ã€
-SJISã§ä¿å­˜ã—ãªã„ã¨ã‚¨ãƒ©ãƒ¼ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã®æ—¥æœ¬èªãŒæ–‡å­—åŒ–ã‘ã—ã¾ã™ã€‚
-ã‚¨ãƒ©ãƒ¼æ™‚ã«ä½•ã‚‚ã—ãªã„ã‚ˆã†ã«ã™ã‚‹ã®ã§ã‚ã‚Œã°
-UTF-8ã§ä¿å­˜ã—ã¦ã‚‚å•é¡Œãªã„ã®ã§
-18ï½21è¡Œã€47ï½51è¡Œã‚’ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆã—ã¦ãã ã•ã„ã€‚
+‚±‚ê‚Íakkun‚É‚æ‚éƒTƒNƒ‰ƒGƒfƒBƒ^—pƒ}ƒNƒopenFile‚ğŒÂl—p‚É‘‚«Š·‚¦‚½‚à‚Ì‚Å‚·B
+‘I‘ğ‚µ‚½ƒeƒLƒXƒg‚ğƒtƒ@ƒCƒ‹‚Æ‚µ‚ÄƒTƒNƒ‰ƒGƒfƒBƒ^i•Êƒ^ƒuj‚ÅŠJ‚«‚Ü‚·B
+64s–Ú`69s–Ú‚Í‚¨‚Ü‚¯‚Æ‚µ‚Ä
+w’è‚µ‚½Šg’£q‚ğŠÖ˜A•t‚¯‚ç‚ê‚½ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ÅŠJ‚­ˆ—‚ğ“ü‚ê‚Ä‚¢‚Ü‚·
+i‰æ‘œƒtƒ@ƒCƒ‹‚È‚Ç‚ğ“o˜^‚·‚é‚ÆAŠJ‚¢‚ÄŠm”F‚Å‚«‚Ü‚·j
 
-ä»¥ä¸‹ã€Œï¼Šã€ãŒã¤ã„ãŸã‚³ãƒ¡ãƒ³ãƒˆã¯ç§ãƒ»hosobosoã«ã‚ˆã‚‹è¿½è¨˜
+‘Š‘ÎƒpƒXEâ‘ÎƒpƒX‘Î‰B
+ScriptControl‚ğg—p‚µ‚Ä‚¢‚é“s‡‚ÅA
+SJIS‚Å•Û‘¶‚µ‚È‚¢‚Æƒ_ƒCƒAƒƒO‚Ì“ú–{Œê‚ª•¶š‰»‚¯‚µ‚Ü‚·B
+
+ˆÈ‰ºu–v‚ª‚Â‚¢‚½ƒRƒƒ“ƒg‚Í„Ehosoboso‚É‚æ‚é’Ç‹L
 */
 
 //openFile
-//é¸æŠã—ãŸãƒ†ã‚­ã‚¹ãƒˆã‚’ãƒ•ã‚¡ã‚¤ãƒ«åã¨ã—ã¦é–‹ã
+//‘I‘ğ‚µ‚½ƒeƒLƒXƒg‚ğƒtƒ@ƒCƒ‹–¼‚Æ‚µ‚ÄŠJ‚­
 
-// ï¼Šã‚¨ãƒ©ãƒ¼ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ç”¨ã‚·ã‚§ãƒ«
+// –ƒGƒ‰[ƒ_ƒCƒAƒƒO—pƒVƒFƒ‹
 if (typeof(Shell) == "undefined") {
 	Shell = new ActiveXObject("WScript.Shell");
 }
+// –ƒtƒ@ƒCƒ‹‹y‚ÑƒtƒHƒ‹ƒ_‚ª‘¶İ‚·‚é‚©Šm”F‚·‚é‚½‚ß‚ÌuFileSystemObjectvƒIƒuƒWƒFƒNƒg¶¬
+var fso = new ActiveXObject( "Scripting.FileSystemObject" );
 
 var dir = Editor.getFilename();
 var selected = Editor.GetSelectedString();
-var p = 0;	//è¦ªéšå±¤æ•°
+var p = 0;	//eŠK‘w”
 
-if(/\.(htm|html|shtml|css|js)$/.test(selected)){
-// ï¼Šãƒ•ã‚¡ã‚¤ãƒ«ã¨ã—ã¦é–‹ãæ‹¡å¼µå­æŒ‡å®š
-	//é¸æŠæ–‡å­—åˆ—ãŒãƒ•ãƒ«ãƒ‘ã‚¹ãªã‚‰ãã®ã¾ã¾ã‚ªãƒ¼ãƒ—ãƒ³
-	if (selected.search(/^[a-z]:\\/i)>=0){
-		Editor.FileOpen(selected);
-	}else{
-		//è¦ªéšå±¤ã®æ¤œç´¢
-		while( selected.search(/^\.\.\\/) != -1 ){
-			selected = selected.substring(3);
-			p++;
-		}
-		//ç¾åœ¨ã®ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã‹ã‚‰ãƒ•ã‚¡ã‚¤ãƒ«åã‚’å–ã‚Šé™¤ã
-		do{
-			if ( (n = dir.lastIndexOf("\\")) != -1){
-				var dir = dir.substring(0,n);
-			}
-			p--;
-		}while(p>=0);
-		Editor.FileOpen(dir + '\\' + selected);
-	}
-
-} else if (selected.length == 0) {
-	Shell.Popup("ãƒ†ã‚­ã‚¹ãƒˆã‚’é¸æŠã—ã¦ãã ã•ã„ã€‚", 0, "ã‚¨ãƒ©ãƒ¼", 0);
-
+//‘I‘ğ•¶š—ñ‚ªƒtƒ‹ƒpƒX‚©‚Ç‚¤‚©‚Ì”»’è
+var textfile;
+if (selected.search(/^[a-z]:\\/i)>=0){
+	var textfile = selected;
 } else {
-	Shell.Popup("é¸æŠãƒ†ã‚­ã‚¹ãƒˆã¯ãƒ•ã‚¡ã‚¤ãƒ«ã¨ã—ã¦\né–‹ãã“ã¨ãŒã§ãã¾ã›ã‚“ã€‚", 0, "ã‚¨ãƒ©ãƒ¼", 0);
-	
+	//‘I‘ğ•¶š—ñ‚ªƒtƒ‹ƒpƒX‚Å‚Í‚È‚¢ê‡
+	//eŠK‘w‚ÌŒŸõ
+	while( selected.search(/^\.\.\\/) != -1 ){
+		selected = selected.substring(3);
+		p++;
+	}
+	//Œ»İ‚Ìƒtƒ@ƒCƒ‹ƒpƒX‚©‚çƒtƒ@ƒCƒ‹–¼‚ğæ‚èœ‚­
+	do {
+		if ( (n = dir.lastIndexOf("\\")) != -1){
+			var dir = dir.substring(0,n);
+		}
+		p--;
+	} while(p>=0);
+	var textfile = dir + '\\' + selected;
 }
+
+if(selected.length == 0) {
+	Shell.Popup("ƒeƒLƒXƒg‚ğ‘I‘ğ‚µ‚Ä‚­‚¾‚³‚¢B", 0, "ƒGƒ‰[", 0);
+//–FileExists ƒƒ\ƒbƒh‚ÅA‘I‘ğƒeƒLƒXƒgtextfile‚Æ‚¢‚¤ƒtƒ@ƒCƒ‹‚ª‘¶İ‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©‚Ì”»’è
+} else if (fso.FileExists(textfile)) {
+	if (/\.(htm|html|shtml|css|js|xml)$/i.test(selected)) {
+//–ƒtƒ@ƒCƒ‹‚Æ‚µ‚ÄŠJ‚­Šg’£qw’è D‚İ‚Å’Ç‰ÁEíœ‚µ‚Ä‚­‚¾‚³‚¢
+	if ((Shell.Popup("Às‚µ‚Ü‚·‚©H", 0, "Šm”F", 4)) == 6) {
+			Editor.FileOpen(textfile);
+	}
+	//– 58s–Ú‚ÌShell.Popup‚ÅAÀs‚·‚é‚©Šm”Fƒ_ƒCƒAƒƒO‚ğo‚·‚æ‚¤‚É‚µ‚Ä‚¢‚Ü‚·B
+	//– •K—v‚È‚¢‚È‚ç58A60s–Ú‚ğƒRƒƒ“ƒgƒAƒEƒg‚µ‚Ä‚­‚¾‚³‚¢B
+
+// –‚±‚±‚©‚ç‚¨‚Ü‚¯Aw’è‚µ‚½Šg’£q‚ğŠÖ˜A•t‚¯‚ç‚ê‚½ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ÅŠJ‚«‚Ü‚·
+	} else if (/\.(jpg|jpeg|png|gif|svg|avif|webp)$/i.test(selected)) {
+		if ((Shell.Popup("ŠÖ˜A•t‚¯‚ç‚ê‚½ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ÅŠJ‚«‚Ü‚·B\nÀs‚µ‚Ü‚·‚©H", 0, "Šm”F", 4)) == 6){
+			Shell.Run(textfile);
+		}
+// –‚¨‚Ü‚¯‚±‚±‚Ü‚ÅA•K—v‚È‚¢‚È‚çíœ‚©ƒRƒƒ“ƒgƒAƒEƒg‚µ‚Ä‚­‚¾‚³‚¢
+
+	} else {
+	Shell.Popup("‘I‘ğ‚µ‚½•¶š—ñ‚Í\nƒtƒ@ƒCƒ‹‚Æ‚µ‚ÄŠJ‚­Šg’£q‚Éw’è‚³‚ê‚Ä‚¢‚Ü‚¹‚ñB", 0, "ƒGƒ‰[", 0);
+	}
+} else {
+	Shell.Popup("‘I‘ğ‚µ‚½•¶š—ñ‚Í\nƒtƒ@ƒCƒ‹‚Æ‚µ‚ÄŠJ‚­‚±‚Æ‚ª‚Å‚«‚Ü‚¹‚ñB", 0, "ƒGƒ‰[", 0);
+}
+
+/*
+–ŒÂlƒƒ‚
+Popupƒƒ\ƒbƒh
+http://sakura.qp.land.to/SakuraMacro/usage/popup.html
+http://sakura.qp.land.to/SakuraMacro/usage/MessageBox.html
+
+FileExists ƒƒ\ƒbƒh
+https://learn.microsoft.com/ja-jp/office/vba/language/reference/user-interface-help/fileexists-method
+*/
