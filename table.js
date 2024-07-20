@@ -34,11 +34,11 @@ str = "<table>" + lineCode;
 for (var i = 0; i < textArray.length; i++) {
 	var strs = textArray[i].split(/\t/);
 	if (i === 0) {
-	str += "<thead>" + lineCode + indent + "<tr>";
+		str += "<thead>" + lineCode + indent + "<tr>";
 	} else if (i === 1) {
-	str += "<tbody>" + lineCode + indent + "<tr>";
+		str += "<tbody>" + lineCode + indent + "<tr>";
 	} else {
-	str += indent + "<tr>";
+		str += indent + "<tr>";
 	}
 	for (var j = 0; j < strs.length; j++) {
 		if (i === 0) {
@@ -49,9 +49,9 @@ for (var i = 0; i < textArray.length; i++) {
 		}
 	}
 	if (i === 0) {
-	str += "</tr>" + lineCode + "</thead>" + lineCode;
+		str += "</tr>" + lineCode + "</thead>" + lineCode;
 	} else {
-	str += "</tr>" + lineCode;
+		str += "</tr>" + lineCode;
 	}
 }
 str += "</tbody>" + lineCode + "</table>";
