@@ -1,45 +1,45 @@
 /*
-openFile SakuraEditor�p ���Ɖ�����
+openFile SakuraEditor用 私家改造版
 
-�����akkun���ɂ��T�N���G�f�B�^�p�}�N��openFile���l�p�ɏ������������̂ł��B
-�I�������e�L�X�g���t�@�C���Ƃ��ăT�N���G�f�B�^�i�ʃ^�u�j�ŊJ���܂��B
-64�s�ځ`69�s�ڂ͂��܂��Ƃ���
-�w�肵���g���q���֘A�t����ꂽ�A�v���P�[�V�����ŊJ�����������Ă��܂�
-�i�摜�t�@�C���Ȃǂ�o�^����ƁA�J���Ċm�F�ł��܂��j
+これはakkun氏によるサクラエディタ用マクロopenFileを個人用に書き換えたものです。
+選択したテキストをファイルとしてサクラエディタ（別タブ）で開きます。
+64行目～69行目はおまけとして
+指定した拡張子を関連付けられたアプリケーションで開く処理を入れています
+（画像ファイルなどを登録すると、開いて確認できます）
 
-���΃p�X�E��΃p�X�Ή��B
-ScriptControl���g�p���Ă���s���ŁA
-SJIS�ŕۑ����Ȃ��ƃ_�C�A���O�̓��{�ꂪ�����������܂��B
+相対パス・絶対パス対応。
+ScriptControlを使用している都合で、
+SJISで保存しないとダイアログの日本語が文字化けします。
 
-�ȉ��u���v�������R�����g�͎��Ehosoboso�ɂ��ǋL
+以下「＊」がついたコメントは私・hosobosoによる追記
 */
 
 //openFile
-//�I�������e�L�X�g���t�@�C�����Ƃ��ĊJ��
+//選択したテキストをファイル名として開く
 
-// ���G���[�_�C�A���O�p�V�F��
+// ＊エラーダイアログ用シェル
 if (typeof(Shell) == "undefined") {
 	Shell = new ActiveXObject("WScript.Shell");
 }
-// ���t�@�C���y�уt�H���_�����݂��邩�m�F���邽�߂́uFileSystemObject�v�I�u�W�F�N�g����
+// ＊ファイル及びフォルダが存在するか確認するための「FileSystemObject」オブジェクト生成
 var fso = new ActiveXObject( "Scripting.FileSystemObject" );
 
 var dir = Editor.getFilename();
 var selected = Editor.GetSelectedString();
-var p = 0;	//�e�K�w��
+var p = 0;	//親階層数
 
-//�I�𕶎��񂪃t���p�X���ǂ����̔���
+//選択文字列がフルパスかどうかの判定
 var textfile;
 if (selected.search(/^[a-z]:\\/i)>=0){
 	var textfile = selected;
 } else {
-	//�I�𕶎��񂪃t���p�X�ł͂Ȃ��ꍇ
-	//�e�K�w�̌���
+	//選択文字列がフルパスではない場合
+	//親階層の検索
 	while( selected.search(/^\.\.\\/) != -1 ){
 		selected = selected.substring(3);
 		p++;
 	}
-	//���݂̃t�@�C���p�X����t�@�C��������菜��
+	//現在のファイルパスからファイル名を取り除く
 	do {
 		if ( (n = dir.lastIndexOf("\\")) != -1){
 			var dir = dir.substring(0,n);
@@ -50,37 +50,37 @@ if (selected.search(/^[a-z]:\\/i)>=0){
 }
 
 if(selected.length == 0) {
-	Shell.Popup("�e�L�X�g��I�����Ă��������B", 0, "�G���[", 0);
-//��FileExists ���\�b�h�ŁA�I���e�L�X�gtextfile�Ƃ����t�@�C�������݂��Ă��邩�ǂ����̔���
+	Shell.Popup("テキストを選択してください。", 0, "エラー", 0);
+//＊FileExists メソッドで、選択テキストtextfileというファイルが存在しているかどうかの判定
 } else if (fso.FileExists(textfile)) {
 	if (/\.(htm|html|shtml|css|js|xml)$/i.test(selected)) {
-//���t�@�C���Ƃ��ĊJ���g���q�w�� �D�݂Œǉ��E�폜���Ă�������
-	if ((Shell.Popup("���s���܂����H", 0, "�m�F", 4)) == 6) {
+//＊ファイルとして開く拡張子指定 好みで追加・削除してください
+	if ((Shell.Popup("実行しますか？", 0, "確認", 4)) == 6) {
 			Editor.FileOpen(textfile);
 	}
-	//�� 58�s�ڂ�Shell.Popup�ŁA���s���邩�m�F�_�C�A���O���o���悤�ɂ��Ă��܂��B
-	//�� �K�v�Ȃ��Ȃ�58�A60�s�ڂ��R�����g�A�E�g���Ă��������B
+	//＊ 58行目のShell.Popupで、実行するか確認ダイアログを出すようにしています。
+	//＊ 必要ないなら58、60行目をコメントアウトしてください。
 
-// ���������炨�܂��A�w�肵���g���q���֘A�t����ꂽ�A�v���P�[�V�����ŊJ���܂�
+// ＊ここからおまけ、指定した拡張子を関連付けられたアプリケーションで開きます
 	} else if (/\.(jpg|jpeg|png|gif|svg|avif|webp)$/i.test(selected)) {
-		if ((Shell.Popup("�֘A�t����ꂽ�A�v���P�[�V�����ŊJ���܂��B\n���s���܂����H", 0, "�m�F", 4)) == 6){
+		if ((Shell.Popup("関連付けられたアプリケーションで開きます。\n実行しますか？", 0, "確認", 4)) == 6){
 			Shell.Run(textfile);
 		}
-// �����܂������܂ŁA�K�v�Ȃ��Ȃ�폜���R�����g�A�E�g���Ă�������
+// ＊おまけここまで、必要ないなら削除かコメントアウトしてください
 
 	} else {
-	Shell.Popup("�I�������������\n�t�@�C���Ƃ��ĊJ���g���q�Ɏw�肳��Ă��܂���B", 0, "�G���[", 0);
+		Shell.Popup("選択した文字列は\nファイルとして開く拡張子に指定されていません。", 0, "エラー", 0);
 	}
 } else {
-	Shell.Popup("�I�������������\n�t�@�C���Ƃ��ĊJ�����Ƃ��ł��܂���B", 0, "�G���[", 0);
+	Shell.Popup("選択した文字列は\nファイルとして開くことができません。", 0, "エラー", 0);
 }
 
 /*
-���l����
-Popup���\�b�h
+＊個人メモ
+Popupメソッド
 http://sakura.qp.land.to/SakuraMacro/usage/popup.html
 http://sakura.qp.land.to/SakuraMacro/usage/MessageBox.html
 
-FileExists ���\�b�h
+FileExists メソッド
 https://learn.microsoft.com/ja-jp/office/vba/language/reference/user-interface-help/fileexists-method
 */
