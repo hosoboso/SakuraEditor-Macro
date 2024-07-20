@@ -31,7 +31,6 @@ var textArray = Selecttext.split(lineCode);
 str = "<ul>" + lineCode;
 for (var i = 0; i < textArray.length; i++) {
 	str += indent + "<li>" + textArray[i] + "</li>" + lineCode;
-	}
+}
 str += "</ul>";
-
 Editor.InsText(str);
